@@ -11,6 +11,7 @@ public class Main extends JFrame implements ActionListener {
     Main(){
 
         setSize(1024,683);
+        setResizable(false);
         setLocationRelativeTo( null );      // To set window location centred
         setTitle("Hotel Manager");
 

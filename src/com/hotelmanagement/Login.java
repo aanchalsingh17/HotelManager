@@ -78,6 +78,7 @@ public class Login extends JFrame {
         setSize(450,250);
         setLocationRelativeTo( null );      // To set window location centred
         setTitle("Login");
+        setResizable(false);
         setVisible(true);
     }
 
