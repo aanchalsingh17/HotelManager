@@ -32,9 +32,9 @@ public class Main extends JFrame {
         setVisible(true);
         //Adding a button in order to go to next frame
         JButton jButton = new JButton("Menu");
-        jButton.setBackground(Color.BLACK);
-        jButton.setForeground(Color.WHITE);
-        jButton.setBounds(1500,300,150,30);
+       // jButton.setBackground(Color.BLACK);
+      //  jButton.setForeground(Color.WHITE);
+        jButton.setBounds(800,600,100,30);
         //Adding a button over the ImageView
         jLabel.add(jButton);
 
