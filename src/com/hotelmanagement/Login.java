@@ -2,8 +2,11 @@ package com.hotelmanagement;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
-public class Login extends JFrame {
+public class Login extends JFrame implements ActionListener {
 
     JLabel userLabel, passwordLabel;
     JTextField username;
@@ -54,6 +57,7 @@ public class Login extends JFrame {
         loginBtn.setBackground(Color.black);
         loginBtn.setForeground(Color.ORANGE);
         loginBtn.setFocusPainted(false);
+        loginBtn.addActionListener(this);
         add(loginBtn);
 
         //  Cancel button
@@ -62,6 +66,7 @@ public class Login extends JFrame {
         cancelBtn.setBackground(Color.black);
         cancelBtn.setForeground(Color.ORANGE);
         cancelBtn.setFocusPainted(false);
+        cancelBtn.addActionListener(this);
         add(cancelBtn);
 
         //  Image icon at right corner
@@ -81,8 +86,33 @@ public class Login extends JFrame {
         setResizable(false);
         setVisible(true);
     }
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+           if(actionEvent.getSource() == loginBtn){
+            String Retrievedusername =    username.getText();
+            String Retrievedpassword = password.getText();
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            String str = "select * from login where username = '"+Retrievedusername+"' and password = '"+Retrievedpassword+"'";
+            try {
+               ResultSet resultSet =  databaseConnection.statement.executeQuery(str);
+               if(resultSet.next()){
+                   new Dashboard().setVisible(true);
+                   this.setVisible(false);
+               }else{
+                   //if invalid password or username is entered
+                   JOptionPane.showMessageDialog(null,"Invalid Username and Password");
+                   this.setVisible(false);
+               }
+            }catch (Exception e){}
 
+           }
+           if(actionEvent.getSource() == cancelBtn){
+               System.exit(0);
+           }
+    }
     public static void main(String[] args) {
         new Login();
     }
+
+
 }
