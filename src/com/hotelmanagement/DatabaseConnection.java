@@ -1,9 +1,6 @@
 package com.hotelmanagement;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseConnection {
     Connection connection;
@@ -11,9 +8,8 @@ public class DatabaseConnection {
    public DatabaseConnection(){
        try{
            Class.forName("com.mysql.cj.jdbc.Driver");
-           connection = DriverManager.getConnection("jdbc:mysql:///HotelManager","root","aanchal@1711");
+           connection = DriverManager.getConnection("jdbc:mysql:///HotelManager","root","25481711");
            statement = connection.createStatement();
-
 
        }catch (Exception e){
            e.printStackTrace();
