@@ -4,10 +4,21 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AddEmployee extends JFrame {
-    JLabel nameLabel,ageLabel,genderLabel,jobLabel,salaryLabel,IdLabel,emailLabel;
-    JTextField name,Age,Salary,email,Aadhaar;
-    RoundButton addBtn;
+
+
     AddEmployee() {
+        JLabel nameLabel,ageLabel,genderLabel,jobLabel,salaryLabel,IdLabel,emailLabel;
+        JTextField name,Age,Salary,email,Aadhaar;
+        RoundButton addBtn;
+        getContentPane().setBackground(Color.WHITE);
+        this.setLayout(null);
+        this.setSize(700,450);
+        this.setLocationRelativeTo((Component)null );      // To set window location centred
+        this.setTitle("Add Employee");
+        this.setResizable(false);
+
+        JRadioButton male,female;
+        JComboBox jobs;
         //NameIcon
         ImageIcon ic = new ImageIcon("src/com/hotelmanagement/icons/user_icon.png");
         Image login = ic.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -80,10 +91,19 @@ public class AddEmployee extends JFrame {
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         add(Age);
+        //GenderRadioButton
+        male = new JRadioButton("Male");
+        male.setBounds(150,130,70,30);
+        add(male);
+        female = new JRadioButton("Female");
+        female.setBounds(230,130,70,30);
+        add(female);
+        //DropDownField For job
+
         //SalaryField
         Salary = new JTextField();
         Salary.setBackground(Color.lightGray);
-        Salary.setBounds(150,130,150,30);
+        Salary.setBounds(150,230,150,30);
         Salary.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
@@ -110,14 +130,15 @@ public class AddEmployee extends JFrame {
         addBtn.setBackground(Color.black);
         addBtn.setForeground(Color.ORANGE);
         addBtn.setFocusPainted(false);
-       // addBtn.addActionListener(this);
         add(addBtn);
-        getContentPane().setBackground(Color.WHITE);
-        setLayout(null);
-        setSize(700,450);
-        setLocationRelativeTo( null );      // To set window location centred
-        setTitle("Add Employee");
-        setResizable(false);
+        //icon at right side
+        ImageIcon icon = new ImageIcon("src/com/hotelmanagement/icons/icon1.png");
+        Image icn_cmp = icon.getImage().getScaledInstance(250,250,Image.SCALE_SMOOTH);
+        ImageIcon loginIcon = new ImageIcon(icn_cmp);
+        JLabel loginLabel = new JLabel(loginIcon);
+        loginLabel.setBounds(400,70,250,250);
+        add(loginLabel);
+
         setVisible(true);
     }
 
