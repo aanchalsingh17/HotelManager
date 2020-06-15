@@ -2,8 +2,10 @@ package com.hotelmanagement;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Dashboard extends JFrame {
+public class Dashboard extends JFrame implements ActionListener {
 
     JMenuBar menuBar;
     JMenu menu1,admin;
@@ -45,6 +47,7 @@ public class Dashboard extends JFrame {
         add_employee = new JMenuItem("Add Employee");
         add_employee.setBackground(Color.darkGray);
         add_employee.setForeground(Color.WHITE);
+        add_employee.addActionListener(this);
         admin.add(add_employee);
         admin.addSeparator();
 
@@ -78,8 +81,16 @@ public class Dashboard extends JFrame {
         setBounds(0,0,screenWidth, screenHeight);
         setVisible(true);
     }
-
+ @Override
+ public void actionPerformed(ActionEvent actionEvent) {
+   if(actionEvent.getActionCommand().equals("Add Employee")){
+       new AddEmployee().setVisible(true);
+       this.setVisible(false);
+   }
+ }
     public static void main(String[] args) {
         new Dashboard().setVisible(true);
     }
+
+
 }
