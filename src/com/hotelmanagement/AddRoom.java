@@ -153,8 +153,7 @@ public class AddRoom extends JFrame implements ActionListener {
         this.setResizable(false);
 
 
-        setVisible(true);
-
+           
     }
 
     public void actionPerformed(ActionEvent ae){
