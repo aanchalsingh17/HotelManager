@@ -24,7 +24,7 @@ public class Dashboard extends JFrame implements ActionListener {
         menuBar.setBackground(Color.BLACK);
         add(menuBar);
 
-        menu1 = new JMenu("HOTEL MANAGMENT");
+        menu1 = new JMenu("HOTEL MANAGEMENT");
         menu1.setForeground(Color.WHITE);
         menuBar.add(menu1);
 
@@ -40,6 +40,7 @@ public class Dashboard extends JFrame implements ActionListener {
         reception = new JMenuItem("Reception");
         reception.setBackground(Color.darkGray);
         reception.setForeground(Color.WHITE);
+        reception.addActionListener(this);
         menu1.add(reception);
         menu1.addSeparator();       //  Seperator for gap between two menu items
 
@@ -54,6 +55,7 @@ public class Dashboard extends JFrame implements ActionListener {
         add_room = new JMenuItem("Add Room");
         add_room.setBackground(Color.darkGray);
         add_room.setForeground(Color.WHITE);
+        add_room.addActionListener(this);
         admin.add(add_room);
         admin.addSeparator();
 
@@ -61,6 +63,7 @@ public class Dashboard extends JFrame implements ActionListener {
         add_driver = new JMenuItem("Add Driver");
         add_driver.setBackground(Color.darkGray);
         add_driver.setForeground(Color.WHITE);
+        add_driver.addActionListener(this);
         admin.add(add_driver);
 
         ImageIcon dashImage = new ImageIcon("src/com/hotelmanagement/icons/dashboard.jpg");
@@ -83,10 +86,16 @@ public class Dashboard extends JFrame implements ActionListener {
     }
  @Override
  public void actionPerformed(ActionEvent actionEvent) {
+
    if(actionEvent.getActionCommand().equals("Add Employee")){
        new AddEmployee().setVisible(true);
-       //this.setVisible(false);
    }
+
+   else if(actionEvent.getActionCommand().equals("Add Room")){
+       new AddRoom().setVisible(true);
+   }
+
+
  }
     public static void main(String[] args) {
         new Dashboard().setVisible(true);
