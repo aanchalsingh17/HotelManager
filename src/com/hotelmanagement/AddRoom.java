@@ -62,6 +62,7 @@ public class AddRoom extends JFrame implements ActionListener {
 
         available = new JComboBox(new String[] {"Available", "Occupied"});
         available.setSelectedIndex(0);
+        available.setBackground(Color.WHITE);
         available.setBorder(BorderFactory.createLineBorder(Color.black,1));
         available.setBounds(180,100,150,30);
         background.add(available);
@@ -77,6 +78,7 @@ public class AddRoom extends JFrame implements ActionListener {
 
         clean = new JComboBox(new String[] {"Clean", "Dirty"});
         clean.setSelectedIndex(0);
+        clean.setBackground(Color.WHITE);
         clean.setBorder(BorderFactory.createLineBorder(Color.black,1));
         clean.setBounds(180,150,150,30);
         background.add(clean);
@@ -109,6 +111,7 @@ public class AddRoom extends JFrame implements ActionListener {
 
         bedType = new JComboBox(new String[] {"Single Bed", "Double Bed"});
         bedType.setBounds(180,250,150,30);
+        bedType.setBackground(Color.WHITE);
         bedType.setBorder(BorderFactory.createLineBorder(Color.black,1));
         background.add(bedType);
 
@@ -186,7 +189,7 @@ public class AddRoom extends JFrame implements ActionListener {
 
                     databaseConnection.statement.executeUpdate(sqlCreate);
                     databaseConnection.statement.executeUpdate(addRoom);
-                    JOptionPane.showMessageDialog(null, "New Employee Added");
+                    JOptionPane.showMessageDialog(null, "New Room Added");
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error Occurred. Try again");
                     e.printStackTrace();

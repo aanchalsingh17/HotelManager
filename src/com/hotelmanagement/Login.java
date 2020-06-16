@@ -15,6 +15,15 @@ public class Login extends JFrame implements ActionListener {
 
     Login(){
 
+
+        ImageIcon i1 = new ImageIcon("src/com/hotelmanagement/icons/bokeh.jpeg");
+        Image b1 = i1.getImage().getScaledInstance(450,330,Image.SCALE_SMOOTH);
+        ImageIcon i2 = new ImageIcon(b1);
+        JLabel background = new JLabel(i2);
+        background.setBounds(0,0,450,270);
+        add(background);
+
+
         //  Username label
         ImageIcon ic = new ImageIcon("src/com/hotelmanagement/icons/user_icon.png");
         Image login = ic.getImage().getScaledInstance(30,30,Image.SCALE_SMOOTH);
@@ -22,7 +31,7 @@ public class Login extends JFrame implements ActionListener {
         userLabel = new JLabel("Username :");
         userLabel.setBounds(10,28,120,40);
         userLabel.setIcon(user_icon);
-        add(userLabel);
+        background.add(userLabel);
 
         //  Password label
         ImageIcon ic2 = new ImageIcon("src/com/hotelmanagement/icons/key_icon.png");
@@ -31,25 +40,25 @@ public class Login extends JFrame implements ActionListener {
         passwordLabel = new JLabel("  Password :");
         passwordLabel.setBounds(10,78,120,40);
         passwordLabel.setIcon(key_icon);
-        add(passwordLabel);
+        background.add(passwordLabel);
 
         //  Username textField
         username = new JTextField();
-        username.setBackground(Color.lightGray);
+        username.setBackground(Color.white);
         username.setBounds(150,30,150,30);
         username.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        add(username);
+        background.add(username);
 
         //  Password passwordField
         password = new JPasswordField();
-        password.setBackground(Color.lightGray);
+        password.setBackground(Color.white);
         password.setBounds(150,80,150,30);
         password.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        add(password);
+        background.add(password);
 
         //  Login button
         loginBtn = new RoundButton("LOGIN");
@@ -58,7 +67,7 @@ public class Login extends JFrame implements ActionListener {
         loginBtn.setForeground(Color.ORANGE);
         loginBtn.setFocusPainted(false);
         loginBtn.addActionListener(this);
-        add(loginBtn);
+        background.add(loginBtn);
 
         //  Cancel button
         cancelBtn = new RoundButton("CANCEL");
@@ -67,7 +76,7 @@ public class Login extends JFrame implements ActionListener {
         cancelBtn.setForeground(Color.ORANGE);
         cancelBtn.setFocusPainted(false);
         cancelBtn.addActionListener(this);
-        add(cancelBtn);
+        background.add(cancelBtn);
 
         //  Image icon at right corner
         ImageIcon icon = new ImageIcon("src/com/hotelmanagement/icons/login.png");
@@ -75,10 +84,9 @@ public class Login extends JFrame implements ActionListener {
         ImageIcon loginIcon = new ImageIcon(icn_cmp);
         JLabel loginLabel = new JLabel(loginIcon);
         loginLabel.setBounds(330,20,100,100);
-        add(loginLabel);
+        background.add(loginLabel);
 
 
-        getContentPane().setBackground(Color.WHITE);
         setLayout(null);
         setSize(450,250);
         setLocationRelativeTo( null );      // To set window location centred
