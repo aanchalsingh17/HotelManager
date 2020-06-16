@@ -5,12 +5,17 @@ import java.sql.*;
 public class DatabaseConnection {
     Connection connection;
     Statement statement;
-   public DatabaseConnection(){
-       try{
-           Class.forName("com.mysql.cj.jdbc.Driver");
-           connection = DriverManager.getConnection("jdbc:mysql:///HotelManager","root","25481711");
-           statement = connection.createStatement();
+    private static String jdbcDriver = "com.mysql.cj.jdbc.Driver";
+    private static String dbName = "HotelManager";
 
+   public DatabaseConnection(){
+
+       try{
+           Class.forName(jdbcDriver);
+           connection = DriverManager.getConnection("jdbc:mysql://localhost/?user=root&password=25481711");
+           statement = connection.createStatement();
+           statement.executeUpdate("CREATE DATABASE IF NOT EXISTS "+dbName+ ";");
+           statement.executeQuery("USE "+dbName+";");
        }catch (Exception e){
            e.printStackTrace();
        }

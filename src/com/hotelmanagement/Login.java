@@ -97,12 +97,18 @@ public class Login extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
            if(actionEvent.getSource() == loginBtn){
+
+               String sqlCreate = "CREATE TABLE IF NOT EXISTS login"
+                       + "  (username            VARCHAR(30),"
+                       + "   password            VARCHAR(30))";
+
             String Retrievedusername =    username.getText();
             String Retrievedpassword = password.getText();
             DatabaseConnection databaseConnection = new DatabaseConnection();
             String str = "select * from login where username = '"+Retrievedusername+"' and password = '"+Retrievedpassword+"'";
             try {
-               ResultSet resultSet =  databaseConnection.statement.executeQuery(str);
+                databaseConnection.statement.executeUpdate(sqlCreate);
+                ResultSet resultSet =  databaseConnection.statement.executeQuery(str);
                if(resultSet.next()){
                    new Dashboard().setVisible(true);
                    this.setVisible(false);

@@ -9,7 +9,8 @@ import java.util.Map;
 
 public class Main extends JFrame implements ActionListener {
     Main(){
-
+        //  Helps to create database if it doesn't exist
+        DatabaseConnection databaseConnection = new DatabaseConnection();
         setSize(1024,683);
         setResizable(false);
         setLocationRelativeTo( null );      // To set window location centred
@@ -80,7 +81,6 @@ public class Main extends JFrame implements ActionListener {
 
 
     public static void main(String[] args) {
-
         //Calling the Constructor of the MainPage Frame
         new Main();
     }
