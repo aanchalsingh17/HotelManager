@@ -237,7 +237,6 @@ public class AddEmployee extends JFrame implements ActionListener {
 
 
 
-        getContentPane().setBackground(Color.WHITE);
         this.setLayout(null);
         this.setSize(750,550);
         this.setLocationRelativeTo(null );      // To set window location centred
