@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.RescaleOp;
-import java.sql.ResultSet;
+import java.awt.font.TextAttribute;
+import java.util.Map;
 
 public class AddEmployee extends JFrame implements ActionListener {
     JTextField name,Age,Salary,email,Aadhaar,phone;
@@ -15,81 +15,83 @@ public class AddEmployee extends JFrame implements ActionListener {
         JLabel nameLabel,ageLabel,genderLabel,jobLabel,salaryLabel,IdLabel,emailLabel,phoneLabel;
 
         RoundButton addBtn;
-
-
-        JLabel jLabel;
         getContentPane().setBackground(Color.WHITE);
         this.setLayout(null);
-        this.setSize(700,490);
-        this.setLocationRelativeTo((Component)null );      // To set window location centred
+        this.setSize(800,500);
+        this.setLocationRelativeTo(null );      // To set window location centred
         this.setTitle("Add Employee");
         this.setResizable(false);
-
+        ImageIcon imageIcon = new ImageIcon("src/com/hotelmanagement/icons/backgr.jpeg");
+        Image image1 = imageIcon.getImage().getScaledInstance(800, 500, Image.SCALE_SMOOTH);
+        ImageIcon image_icon = new ImageIcon(image1);
+        JLabel background = new JLabel(image_icon);
+        background.setBounds(0, 0, 800, 500);
+        this.add(background);
 
         //NameIcon
         ImageIcon ic = new ImageIcon("src/com/hotelmanagement/icons/user_icon.png");
-        Image login = ic.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        Image login = ic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon user_icon = new ImageIcon(login);
         nameLabel = new JLabel("Name :");
-        nameLabel.setBounds(10, 28, 120, 40);
+        nameLabel.setBounds(15, 28, 120, 40);
         nameLabel.setIcon(user_icon);
-        add(nameLabel);
+        background.add(nameLabel);
         //AgeIcon
         ImageIcon ageic = new ImageIcon("src/com/hotelmanagement/icons/icon_age1.jpeg");
-        Image image = ageic.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        Image image = ageic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon age_icon = new ImageIcon(image);
         ageLabel = new JLabel("Age :");
-        ageLabel.setBounds(10, 78, 120, 40);
+        ageLabel.setBounds(15, 78, 120, 40);
         ageLabel.setIcon(age_icon);
-        add(ageLabel);
+        background.add(ageLabel);
         //GenderIcon
         ImageIcon genderic = new ImageIcon("src/com/hotelmanagement/icons/gender_icon.png");
-        Image genderImage = genderic.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        Image genderImage = genderic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon gender_icon = new ImageIcon(genderImage);
         genderLabel = new JLabel("Gender :");
-        genderLabel.setBounds(10, 128, 120, 40);
+        genderLabel.setBounds(15, 128, 120, 40);
         genderLabel.setIcon(gender_icon);
-        add(genderLabel);
+        background.add(genderLabel);
         //JobIcon
         ImageIcon jobic = new ImageIcon("src/com/hotelmanagement/icons/jobs_icon.png");
-        Image jobImage = jobic.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        Image jobImage = jobic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon job_icon = new ImageIcon(jobImage);
         jobLabel = new JLabel("Job :");
-        jobLabel.setBounds(10, 178, 120, 40);
+        jobLabel.setBounds(15, 178, 120, 40);
         jobLabel.setIcon(job_icon);
-        add(jobLabel);
+        background.add(jobLabel);
         //PhoneIcon
         ImageIcon phoneic = new ImageIcon("src/com/hotelmanagement/icons/phone_icon.png");
-        Image phoneImage = phoneic.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        Image phoneImage = phoneic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon phone_icon = new ImageIcon(phoneImage);
         phoneLabel = new JLabel("Phone :");
-        phoneLabel.setBounds(10, 228, 120, 40);
+        phoneLabel.setBounds(15, 228, 120, 40);
         phoneLabel.setIcon(phone_icon);
-        add(phoneLabel);
+        background.add(phoneLabel);
         //SalaryIcon
         ImageIcon salaryic = new ImageIcon("src/com/hotelmanagement/icons/salary_icon.png");
-        Image salaryImage = salaryic.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        Image salaryImage = salaryic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon salary_icon = new ImageIcon(salaryImage);
         salaryLabel = new JLabel("Salary :");
-        salaryLabel.setBounds(10, 278, 120, 40);
+        salaryLabel.setBounds(15, 278, 120, 40);
         salaryLabel.setIcon(salary_icon);
-        add(salaryLabel);
+        background.add(salaryLabel);
         //IDIcon
         ImageIcon idic = new ImageIcon("src/com/hotelmanagement/icons/id_icon.png");
-        Image idImage = idic.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        Image idImage = idic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon id_icon = new ImageIcon(idImage);
         IdLabel = new JLabel("Aadhaar :");
-        IdLabel.setBounds(10, 328, 120, 40);
+        IdLabel.setBounds(15, 328, 120, 40);
         IdLabel.setIcon(id_icon);
-        add(IdLabel);
+        background.add(IdLabel);
         //EmailIcon
         ImageIcon emailic = new ImageIcon("src/com/hotelmanagement/icons/email_icon.png");
         Image emailImage = emailic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon email_icon = new ImageIcon(emailImage);
         emailLabel = new JLabel("Email :");
-        emailLabel.setBounds(10, 378, 120, 40);
+        emailLabel.setBounds(15, 378, 120, 40);
         emailLabel.setIcon(email_icon);
-        add(emailLabel);
+        background.add(emailLabel);
         //Name TextField
         name = new JTextField();
         name.setBackground(Color.lightGray);
@@ -97,7 +99,7 @@ public class AddEmployee extends JFrame implements ActionListener {
         name.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        add(name);
+        background.add(name);
         //AgeField
         Age = new JTextField();
         Age.setBackground(Color.lightGray);
@@ -105,20 +107,24 @@ public class AddEmployee extends JFrame implements ActionListener {
         Age.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        add(Age);
+        background.add(Age);
         //GenderRadioButton
         male = new JRadioButton("Male");
         male.setBounds(150,130,70,30);
         male.setBackground(Color.WHITE);
-        add(male);
+        background.add(male);
         female = new JRadioButton("Female");
-        female.setBounds(230,130,70,30);
+        female.setBounds(220,130,90,30);
         female.setBackground(Color.WHITE);
-        add(female);
+        background.add(female);
+        //Grouping of radio buttons
+        ButtonGroup group = new ButtonGroup();
+        group.add(male);
+        group.add(female);
         //DropDownField For job
         String str[] = {"Manager","HouseKeeping","Chef","Waiter/Waitress"};
         jobs = new JComboBox(str);
-        add(jobs);
+        background.add(jobs);
         //PhoneField
         phone = new JTextField();
         phone.setBackground(Color.lightGray);
@@ -126,7 +132,7 @@ public class AddEmployee extends JFrame implements ActionListener {
         phone.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        add(phone);
+        background.add(phone);
         //SalaryField
         Salary = new JTextField();
         Salary.setBackground(Color.lightGray);
@@ -134,7 +140,7 @@ public class AddEmployee extends JFrame implements ActionListener {
         Salary.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        add(Salary);
+        background.add(Salary);
         //IDField
         Aadhaar = new JTextField();
         Aadhaar.setBackground(Color.lightGray);
@@ -142,7 +148,7 @@ public class AddEmployee extends JFrame implements ActionListener {
         Aadhaar.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        add(Aadhaar);
+        background.add(Aadhaar);
         //EmailField
         email = new JTextField();
         email.setBackground(Color.lightGray);
@@ -150,27 +156,32 @@ public class AddEmployee extends JFrame implements ActionListener {
         email.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        add(email);
+        background.add(email);
         //AddBtn
         addBtn = new RoundButton("Add");
-        addBtn.setBounds(160,430,110,30);
+        addBtn.setBounds(170,430,110,30);
         addBtn.setBackground(Color.black);
         addBtn.setForeground(Color.ORANGE);
         addBtn.setFocusPainted(false);
         addBtn.addActionListener(this);
-        add(addBtn);
+        background.add(addBtn);
         //icon at right side
-        ImageIcon icon = new ImageIcon("src/com/hotelmanagement/icons/icon1.png");
-        Image icn_cmp = icon.getImage().getScaledInstance(250,250,Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon("src/com/hotelmanagement/icons/icon.jpg");
+        Image icn_cmp = icon.getImage().getScaledInstance(300,300,Image.SCALE_SMOOTH);
         ImageIcon loginIcon = new ImageIcon(icn_cmp);
         JLabel loginLabel = new JLabel(loginIcon);
-        loginLabel.setBounds(400,70,250,250);
-        add(loginLabel);
-        jLabel = new JLabel("Add Employee Details");
-        jLabel.setForeground(Color.BLUE);
-        jLabel.setBounds(200,40,30,10);
-        jLabel.setFont(new Font("Tahoma", Font.PLAIN,30));
-        add(jLabel);
+        loginLabel.setBounds(400,90,300,300);
+        background.add(loginLabel);
+        //Adding  a label above the right corner icon
+        JLabel appName = new JLabel("Add Employee Details");
+        appName.setBounds(400, 40, 250, 20);
+        appName.setForeground(Color.BLUE);
+        appName.setFont(new Font("SansSerif", 1, 20));
+        Font font = appName.getFont();
+        Map attributes = font.getAttributes();
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_TWO_PIXEL);
+        appName.setFont(font.deriveFont(attributes));
+        background.add(appName);
         setVisible(true);
     }
     @Override
