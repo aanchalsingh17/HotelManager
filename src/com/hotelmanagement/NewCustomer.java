@@ -8,22 +8,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.sql.ResultSet;
+import java.util.Locale;
 import java.util.Map;
 
 public class NewCustomer extends JFrame implements ActionListener{
-JTextField Aadhaar,name,countryField,depositField;
+JTextField Aadhaar,name,depositField,costField;
 JRadioButton male,female,yes,no;
-JComboBox Id;
+JComboBox Id, countryCombo, bedCombo;
 JComboBox Allocated;
 RoundButton addBtn,cancelBtn;
     NewCustomer(){
-        JLabel IdLabel,NumberLabel,genderLabel,nameLabel,countryLabel,allotLabel,checkLabel,Deposit;
+        JLabel IdLabel,NumberLabel,genderLabel,nameLabel,bedLabel,countryLabel,allotLabel,checkLabel,Deposit,costLabel;
 
         ImageIcon imageIcon = new ImageIcon("src/com/hotelmanagement/icons/backgr.jpeg");
-        Image image1 = imageIcon.getImage().getScaledInstance(1000, 550, Image.SCALE_SMOOTH);
+        Image image1 = imageIcon.getImage().getScaledInstance(1000, 650, Image.SCALE_SMOOTH);
         ImageIcon image_icon = new ImageIcon(image1);
         JLabel background = new JLabel(image_icon);
-        background.setBounds(0, 0, 1000, 550);
+        background.setBounds(0, 0, 1000, 650);
         this.add(background);
 
         //  Heading
@@ -120,60 +121,144 @@ RoundButton addBtn,cancelBtn;
         countryLabel.setIcon(country_icon);
         background.add(countryLabel);
 
-        //CountryTextField
-        countryField = new JTextField();
-        countryField.setBackground(Color.white);
-        countryField.setBounds(240,258,150,30);
-        countryField.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.black,2),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        background.add(countryField);
+
+
+        String[] countries = new String[Locale.getISOCountries().length];
+        String[] countryCodes = Locale.getISOCountries();
+        for (int i = 0; i < countryCodes.length; i++) {
+            Locale obj = new Locale("", countryCodes[i]);
+            countries[i] = obj.getDisplayCountry();
+        }
+
+        countryCombo = new JComboBox(countries);
+        countryCombo.setBounds(240,258,150,30);
+        countryCombo.setBorder(BorderFactory.createLineBorder(Color.black,1));
+        countryCombo.setBackground(Color.WHITE);
+        background.add(countryCombo);
+
+
+
+        //BedType
+        ImageIcon bed = new ImageIcon("src/com/hotelmanagement/icons/bed_icon.png");
+        Image bedi = bed.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        ImageIcon bedd = new ImageIcon(bedi);
+        bedLabel = new JLabel("Bed Type :");
+        bedLabel.setBounds(15, 304, 155, 40);
+        bedLabel.setIcon(bedd);
+        background.add(bedLabel);
+
+
+        bedCombo = new JComboBox(new String[]{"All", "Single Bed", "Double Bed"});
+        bedCombo.setBounds(240,308,150,30);
+        bedCombo.setBorder(BorderFactory.createLineBorder(Color.black,1));
+        bedCombo.setBackground(Color.WHITE);
+        bedCombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String str;
+                if(bedCombo.getSelectedItem().equals("All")){
+                    str = "select * from room where available = \"Available\" and clean = \"Clean\"";
+                }else{
+                    str = "select * from room where available = \"Available\" and clean = \"Clean\" and bed_type = \"" + bedCombo.getSelectedItem() +"\"";
+                }
+                try{
+                    Allocated.removeAllItems();
+                    DatabaseConnection databaseConnection = new DatabaseConnection();
+                    ResultSet resultSet = databaseConnection.statement.executeQuery(str);
+                    while(resultSet.next()) {
+                        Allocated.addItem(resultSet.getString("room_number"));
+                    }
+                }catch (Exception exc){
+                    exc.printStackTrace();
+                }
+            }
+        });
+        background.add(bedCombo);
 
         //AllocatedIcon
         ImageIcon allotic = new ImageIcon("src/com/hotelmanagement/icons/roomNo_icon.png");
         Image allot = allotic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon allot_icon = new ImageIcon(allot);
         allotLabel = new JLabel("Allocated Room Number :");
-        allotLabel.setBounds(15, 304, 220, 40);
+        allotLabel.setBounds(15, 354, 220, 40);
         allotLabel.setIcon(allot_icon);
         background.add(allotLabel);
 
         Allocated = new JComboBox();
         try{
             DatabaseConnection databaseConnection = new DatabaseConnection();
-            String string = "select * from room";
+            String string = "select * from room where available = \"Available\" and clean = \"Clean\"";
             ResultSet resultSet = databaseConnection.statement.executeQuery(string);
             while(resultSet.next()) {
                 Allocated.addItem(resultSet.getString("room_number"));
             }
-        }catch (Exception e){}
-        Allocated.setBounds(240,308,150,30);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Allocated.setBounds(240,358,150,30);
         Allocated.setBorder(BorderFactory.createLineBorder(Color.black,1));
         Allocated.setBackground(Color.WHITE);
+        Allocated.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    DatabaseConnection databaseConnection = new DatabaseConnection();
+                    String string = "select price from room where room_number = \"" + Allocated.getSelectedItem() + "\"";
+                    ResultSet resultSet = databaseConnection.statement.executeQuery(string);
+                    while(resultSet.next()) {
+                        costField.setText("\u20B9  " + resultSet.getString("price"));
+                    }
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
         background.add(Allocated);
+
+
         //CheckIcon
         ImageIcon checkic = new ImageIcon("src/com/hotelmanagement/icons/tick_icon.png");
         Image check = checkic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon check_icon = new ImageIcon(check);
         checkLabel = new JLabel("CheckIn :");
-        checkLabel.setBounds(15, 354, 150, 40);
+        checkLabel.setBounds(15, 404, 150, 40);
         checkLabel.setIcon(check_icon);
         background.add(checkLabel);
 
         //CheckInRadioButton
         yes = new JRadioButton("Yes");
-        yes.setBounds(240,358,70,30);
+        yes.setBounds(240,408,70,30);
         yes.setOpaque(false);
         background.add(yes);
         no = new JRadioButton("No");
-        no.setBounds(320,358,90,30);
+        no.setBounds(320,408,90,30);
         no.setOpaque(false);
         background.add(no);
         //Grouping of radio buttons
         ButtonGroup group1 = new ButtonGroup();
-        group1.add(male);
-        group1.add(female);
+        group1.add(yes);
+        group1.add(no);
 
+
+        //Priceicon
+        ImageIcon priceic = new ImageIcon("src/com/hotelmanagement/icons/salary_icon.png");
+        Image price = priceic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        ImageIcon price_icon = new ImageIcon(price);
+        costLabel = new JLabel("Room Price :");
+        costLabel.setBounds(15, 454, 155, 40);
+        costLabel.setIcon(price_icon);
+        background.add(costLabel);
+
+        //PriceTextField
+        costField = new JTextField();
+        costField.setBackground(Color.white);
+        costField.setBounds(240,458,150,30);
+        costField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.black,2),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        costField.setText("\u20B9 ");
+        costField.setEditable(false);
+        background.add(costField);
 
 
         //DepositIcon
@@ -181,14 +266,14 @@ RoundButton addBtn,cancelBtn;
         Image deposit = depositic.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon deposit_icon = new ImageIcon(deposit);
         Deposit = new JLabel("Deposit :");
-        Deposit.setBounds(15, 404, 155, 40);
+        Deposit.setBounds(15, 504, 155, 40);
         Deposit.setIcon(deposit_icon);
         background.add(Deposit);
 
         //DepositTextField
          depositField = new JTextField();
         depositField.setBackground(Color.white);
-        depositField.setBounds(240,408,150,30);
+        depositField.setBounds(240,508,150,30);
         depositField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
@@ -207,21 +292,21 @@ RoundButton addBtn,cancelBtn;
 
         //AddBtn
                 addBtn = new RoundButton("Add");
-        addBtn.setBounds(100,470,120,30);
+        addBtn.setBounds(70,570,120,30);
         addBtn.setBackground(Color.black);
         addBtn.setForeground(Color.ORANGE);
         addBtn.addActionListener(this);
         background.add(addBtn);
 
         cancelBtn = new RoundButton("CANCEL");
-        cancelBtn.setBounds(255,470,120,30);
+        cancelBtn.setBounds(235,570,120,30);
         cancelBtn.setForeground(Color.ORANGE);
         cancelBtn.setBackground(Color.black);
         cancelBtn.addActionListener(this);
         background.add(cancelBtn);
 
         this.setLayout(null);
-        this.setSize(900,550);
+        this.setSize(900,650);
         this.setLocationRelativeTo(null );      // To set window location centred
         this.setTitle("Add Customer");
         this.setResizable(false);
@@ -239,18 +324,16 @@ RoundButton addBtn,cancelBtn;
             this.setVisible(false);
             new Reception().setVisible(true);
         }else if(e.getSource()==addBtn){
-            if(name.getText().equals("")) {
+            if (Aadhaar.getText().equals("")) {
+                JOptionPane.showMessageDialog(Aadhaar, "Please specify id number", "Warning", JOptionPane.ERROR_MESSAGE);
+            }else if(name.getText().equals("")) {
                 JOptionPane.showMessageDialog(name, "Please specify name","Warning",JOptionPane.ERROR_MESSAGE);
-            }else if(depositField.getText().equals("")){
-                JOptionPane.showMessageDialog(depositField, "Please fill Deposit","Warning",JOptionPane.ERROR_MESSAGE);
             }else if(!male.isSelected() && !female.isSelected()){
                 JOptionPane.showMessageDialog(male, "Please specify gender","Warning",JOptionPane.ERROR_MESSAGE);
-            }else if(countryField.getText().equals("")){
-                JOptionPane.showMessageDialog(countryField, "Please specify Country","Warning",JOptionPane.ERROR_MESSAGE);
-            }else if(Aadhaar.getText().equals("")){
-                JOptionPane.showMessageDialog(Aadhaar, "Please specify Id Number","Warning",JOptionPane.ERROR_MESSAGE);
             } else if(!yes.isSelected()&&!no.isSelected()){
                 JOptionPane.showMessageDialog(yes, "Please specify check-in","Warning",JOptionPane.ERROR_MESSAGE);
+            }else if(depositField.getText().equals("")){
+                JOptionPane.showMessageDialog(depositField, "Please fill Deposit","Warning",JOptionPane.ERROR_MESSAGE);
             }else {
                 String id = Id.getSelectedItem().toString();
                 String idNumber = Aadhaar.getText();
@@ -261,7 +344,7 @@ RoundButton addBtn,cancelBtn;
                 } else if (female.isSelected()) {
                     Gender = "Female";
                 }
-                String country = countryField.getText();
+                String country = (String)countryCombo.getSelectedItem();
                 String roomNo = Allocated.getSelectedItem().toString();
                 String Check = null;
                 if (yes.isSelected()) {
