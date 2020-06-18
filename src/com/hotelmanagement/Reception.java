@@ -125,7 +125,8 @@ public class Reception extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if(e.getSource() == newCustomerBtn){
-
+            new NewCustomer().setVisible(true);
+            this.setVisible(false);
         }else if(e.getSource() == roomBtn){
 
             new Room().setVisible(true);
