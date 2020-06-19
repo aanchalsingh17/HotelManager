@@ -283,10 +283,10 @@ RoundButton addBtn,cancelBtn;
         //RightSideImage
 
         ImageIcon icon = new ImageIcon("src/com/hotelmanagement/icons/checkin.png");
-        Image icn_cmp = icon.getImage().getScaledInstance(400,400,Image.SCALE_SMOOTH);
+        Image icn_cmp = icon.getImage().getScaledInstance(450,450,Image.SCALE_SMOOTH);
         ImageIcon loginIcon = new ImageIcon(icn_cmp);
         JLabel loginLabel = new JLabel(loginIcon);
-        loginLabel.setBounds(450,80,400,400);
+        loginLabel.setBounds(430,80,450,450);
         background.add(loginLabel);
 
 
@@ -366,15 +366,19 @@ RoundButton addBtn,cancelBtn;
                         + "   deposit           VARCHAR(30))";
 
                 String str = "insert into customer values('"+id+"','"+idNumber+"','"+Name+"','"+Gender+"','"+country+"','"+roomNo+"','"+Check+"','"+price+"')";
+                //  Query to make the booked room occupied
+                String str2 = "update room set available = \"Occupied\" where room_number = \"" + roomNo +"\"";
                 try{
                     databaseConnection.statement.executeUpdate(sqlCreate);
                     databaseConnection.statement.executeUpdate(str);
+                    databaseConnection.statement.executeUpdate(str2);
                     JOptionPane.showMessageDialog(null,"New Customer Added");
                 }catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, "Error Occurred. Try again");
                     exception.printStackTrace();
                 }finally {
                     this.setVisible(false);
+                    new Reception().setVisible(true);
                 }
             }
         }

@@ -91,7 +91,7 @@ public class EmployeeInfo  extends JFrame implements ActionListener {
 
 
         JLabel jLabel = new JLabel("Employee Details");
-        jLabel.setBounds(272,10,300,30);
+        jLabel.setBounds(442,10,300,30);
         jLabel.setFont(new Font("Tahoma", Font.BOLD ,25));
         Font font = jLabel.getFont();
         Map attributes = font.getAttributes();
@@ -147,7 +147,7 @@ public class EmployeeInfo  extends JFrame implements ActionListener {
         backBtn = new RoundButton("BACK");
         backBtn.setBackground(Color.black);
         backBtn.setForeground(Color.ORANGE);
-        backBtn.setBounds(970,500,120,30);
+        backBtn.setBounds(970,490,120,30);
         backBtn.addActionListener(this);
         background.add(backBtn);
 
@@ -205,7 +205,7 @@ public class EmployeeInfo  extends JFrame implements ActionListener {
               employeeInfo.setModel(DbUtils.resultSetToTableModel(resultSet));
               centerTable();
            }catch (Exception ae){
-
+                ae.printStackTrace();
            }
        }
     }
