@@ -144,9 +144,11 @@ public class Reception extends JFrame implements ActionListener {
             new ManagerInfo().setVisible(true);
             this.setVisible(false);
         }else if(e.getSource() == checkoutBtn){
-
+                  new CheckOut().setVisible(true);
+                  this.setVisible(false);
         }else if(e.getSource() == checkStatusBtn){
-
+                 new CheckStatus().setVisible(true);
+                 this.setVisible(false);
         }else if(e.getSource() == roomStatusBtn){
             new UpdateRoom().setVisible(true);
             this.setVisible(false);
