@@ -1,8 +1,6 @@
 package com.hotelmanagement;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -134,7 +132,7 @@ public class CheckStatus extends JFrame implements ActionListener{
 
 
 
-        room = new JTextField();
+        room = new JTextField("");
         room.setBackground(Color.white);
         room.setEditable(false);
         room.setBounds(200,210,150,30);
@@ -233,7 +231,7 @@ public class CheckStatus extends JFrame implements ActionListener{
            this.setVisible(false);
            new Reception().setVisible(true);
        }else if(e.getSource()==updateBtn){
-           if(room.getText()!=" ") {
+           if(!room.getText().equals("")) {
                try {
                    DatabaseConnection c = new DatabaseConnection();
                    String inOut = "";
@@ -259,7 +257,7 @@ public class CheckStatus extends JFrame implements ActionListener{
        }
     }
     public static void main(String[] args) {
-        new CheckStatus().setVisible(true);
+        new CheckOut().setVisible(true);
     }
 
 
