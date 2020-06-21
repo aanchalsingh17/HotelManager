@@ -1,6 +1,8 @@
 package com.hotelmanagement;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,10 +14,13 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class CheckStatus extends JFrame implements ActionListener{
+
     JLabel IdLabel,nameLabel,allotLabel,checkLabel,Deposit,Deposit1;
     JTextField name,room,amountpaid,amountremaining;
     JComboBox idChoice,checkin;
     RoundButton updateBtn,backBtn;
+
+
     CheckStatus(){
         ImageIcon i1 = new ImageIcon("src/com/hotelmanagement/icons/bokeh.jpeg");
         Image b = i1.getImage().getScaledInstance(900,600,Image.SCALE_SMOOTH);
@@ -24,9 +29,9 @@ public class CheckStatus extends JFrame implements ActionListener{
         background.setBounds(0,0,900,600);
         add(background);
 
-        JLabel jLabel = new JLabel("Check-In Details");
-        jLabel.setBounds(270,10,300,30);
-        jLabel.setFont(new Font("Tahoma", Font.BOLD ,25));
+        JLabel jLabel = new JLabel("Check-In Details & Deposit");
+        jLabel.setBounds(210,15,450,30);
+        jLabel.setFont(new Font("Tahoma", Font.BOLD ,26));
         Font font = jLabel.getFont();
         Map attributes = font.getAttributes();
         attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_TWO_PIXEL);
@@ -44,7 +49,7 @@ public class CheckStatus extends JFrame implements ActionListener{
 
         idChoice = new JComboBox();
         idChoice.setBackground(Color.WHITE);
-        idChoice.setBounds(200,70,150,25);
+        idChoice.setBounds(200,70,150,30);
         idChoice.setBorder(BorderFactory.createLineBorder(Color.black,1));
 
         background.add(idChoice);
@@ -62,7 +67,7 @@ public class CheckStatus extends JFrame implements ActionListener{
         idChoice.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                String roomnumber="",name1 = "",deposit="",price="";
+                String roomnumber="",name1 = "",price = "",deposit="",check = "";
                 try{
                     String idnumber = (String)idChoice.getSelectedItem();
                     DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -74,10 +79,17 @@ public class CheckStatus extends JFrame implements ActionListener{
                         name.setText(name1);
                         deposit = resultSet.getString("deposit");
                         amountpaid.setText(deposit);
-
+                        check = resultSet.getString("checkin");
+                        if(check.equals("Yes")){
+                            checkin.setSelectedItem("In");
+                        }else if(check.equals("No")){
+                            checkin.setSelectedItem("Out");
+                        }
                     }
 
-                }catch (Exception ae){}
+                }catch (Exception ae){
+                    ae.printStackTrace();
+                }
 
                 try {
                     DatabaseConnection c = new DatabaseConnection();
@@ -87,9 +99,9 @@ public class CheckStatus extends JFrame implements ActionListener{
                          int remaining = Integer.parseInt(price)-Integer.parseInt(deposit);
                             amountremaining.setText(Integer.toString(remaining));
                     }
-
-
-                }catch (Exception a){}
+                }catch (Exception a){
+                    a.printStackTrace();
+                }
             }
         });
 
@@ -104,6 +116,7 @@ public class CheckStatus extends JFrame implements ActionListener{
 
         name = new JTextField();
         name.setBackground(Color.white);
+        name.setEditable(false);
         name.setBounds(200,140,150,30);
         name.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
@@ -123,6 +136,7 @@ public class CheckStatus extends JFrame implements ActionListener{
 
         room = new JTextField();
         room.setBackground(Color.white);
+        room.setEditable(false);
         room.setBounds(200,210,150,30);
         room.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
@@ -139,7 +153,10 @@ public class CheckStatus extends JFrame implements ActionListener{
 
         String str[]={"In","Out"};
         checkin = new JComboBox(str);
+        checkin.setSelectedItem(null);
         checkin.setBounds(200,280,150,30);
+        checkin.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+        checkin.setBackground(Color.WHITE);
         background.add(checkin);
 
 
@@ -158,6 +175,7 @@ public class CheckStatus extends JFrame implements ActionListener{
         amountpaid.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
         background.add(amountpaid);
 
 
@@ -172,6 +190,7 @@ public class CheckStatus extends JFrame implements ActionListener{
 
         amountremaining = new JTextField();
         amountremaining.setBackground(Color.white);
+        amountremaining.setEditable(false);
         amountremaining.setBounds(200,420,150,30);
         amountremaining.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.black,2),
@@ -180,30 +199,30 @@ public class CheckStatus extends JFrame implements ActionListener{
 
 
         updateBtn = new RoundButton("UPDATE");
-        updateBtn.setBounds(200,500,120,30);
+        updateBtn.setBounds(35,480,120,30);
         updateBtn.setForeground(Color.ORANGE);
         updateBtn.setBackground(Color.black);
         updateBtn.addActionListener(this);
         background.add(updateBtn);
 
         backBtn = new RoundButton("BACK");
-        backBtn.setBounds(350,500,120,30);
+        backBtn.setBounds(215,480,120,30);
         backBtn.setForeground(Color.ORANGE);
         backBtn.setBackground(Color.black);
         backBtn.addActionListener(this);
         background.add(backBtn);
 
         ImageIcon icon = new ImageIcon("src/com/hotelmanagement/icons/inout.png");
-        Image icn_cmp = icon.getImage().getScaledInstance(400,400,Image.SCALE_SMOOTH);
+        Image icn_cmp = icon.getImage().getScaledInstance(440,400,Image.SCALE_SMOOTH);
         ImageIcon loginIcon = new ImageIcon(icn_cmp);
         JLabel loginLabel = new JLabel(loginIcon);
-        loginLabel.setBounds(430,80,400,400);
+        loginLabel.setBounds(380,80,400,350);
         background.add(loginLabel);
 
         this.setLayout(null);
-        this.setSize(900,600);
+        this.setSize(800,550);
         this.setLocationRelativeTo(null );      // To set window location centred
-        this.setTitle("Check-In Details");
+        this.setTitle("Check-In Details & Deposit");
         this.setResizable(false);
         this.getContentPane().setBackground(Color.WHITE);
         setVisible(true);
@@ -217,9 +236,18 @@ public class CheckStatus extends JFrame implements ActionListener{
            if(room.getText()!=" ") {
                try {
                    DatabaseConnection c = new DatabaseConnection();
-                   String str = "update customer set checkin = \"" + checkin.getSelectedItem() + "\" where room_number = \"" + room.getText() + "\"";
+                   String inOut = "";
+                   if(checkin.getSelectedItem().equals("In")){
+                       inOut = "Yes";
+                   }else{
+                       inOut  = "No";
+                   }
+                   String str = "update customer set checkin = \"" + inOut + "\" where room_number = \"" + room.getText() + "\"";
+                   String str2 = "update customer set deposit = \"" + amountpaid.getText() + "\" where room_number = \"" + room.getText() + "\"";
+
                    c.statement.executeUpdate(str);
-                   JOptionPane.showMessageDialog(null, "Update Sucessful");
+                   c.statement.executeUpdate(str2);
+                   JOptionPane.showMessageDialog(null, "Update Successful");
                    new Reception().setVisible(true);
                    setVisible(false);
                } catch (Exception ee) {
