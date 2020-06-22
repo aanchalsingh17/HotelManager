@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class Reception extends JFrame implements ActionListener {
 
-    RoundButton newCustomerBtn,roomBtn,departmentBtn,employeeBtn,customerBtn,managerBtn,checkoutBtn,checkStatusBtn,roomStatusBtn,pickUpBtn,searchRoomBtn,logoutBtn;
+    RoundButton newCustomerBtn,roomBtn,employeeBtn,customerBtn,managerBtn,checkoutBtn,checkStatusBtn,roomStatusBtn,pickUpBtn,searchRoomBtn,logoutBtn;
     Reception(){
 
 
@@ -22,84 +22,78 @@ public class Reception extends JFrame implements ActionListener {
         newCustomerBtn = new RoundButton("NEW CUSTOMER FORM");
         newCustomerBtn.setBackground(Color.black);
         newCustomerBtn.setForeground(Color.ORANGE);
-        newCustomerBtn.setBounds(30,10,200,30);
+        newCustomerBtn.setBounds(30,30,200,30);
         newCustomerBtn.addActionListener(this);
         background.add(newCustomerBtn);
 
         roomBtn = new RoundButton("ROOM");
         roomBtn.setBackground(Color.black);
         roomBtn.setForeground(Color.ORANGE);
-        roomBtn.setBounds(30,50,200,30);
+        roomBtn.setBounds(30,70,200,30);
         roomBtn.addActionListener(this);
         background.add(roomBtn);
 
-        departmentBtn = new RoundButton("DEPARTMENT");
-        departmentBtn.setBackground(Color.black);
-        departmentBtn.setForeground(Color.ORANGE);
-        departmentBtn.setBounds(30,90,200,30);
-        departmentBtn.addActionListener(this);
-        background.add(departmentBtn);
 
         employeeBtn = new RoundButton("EMPLOYEES INFO");
         employeeBtn.setBackground(Color.black);
         employeeBtn.setForeground(Color.ORANGE);
-        employeeBtn.setBounds(30,130,200,30);
+        employeeBtn.setBounds(30,110,200,30);
         employeeBtn.addActionListener(this);
         background.add(employeeBtn);
 
         customerBtn = new RoundButton("CUSTOMERS INFO");
         customerBtn.setBackground(Color.black);
         customerBtn.setForeground(Color.ORANGE);
-        customerBtn.setBounds(30,170,200,30);
+        customerBtn.setBounds(30,150,200,30);
         customerBtn.addActionListener(this);
         background.add(customerBtn);
 
         managerBtn = new RoundButton("MANAGER INFO");
         managerBtn.setBackground(Color.black);
         managerBtn.setForeground(Color.ORANGE);
-        managerBtn.setBounds(30,210,200,30);
+        managerBtn.setBounds(30,190,200,30);
         managerBtn.addActionListener(this);
         background.add(managerBtn);
 
         checkoutBtn = new RoundButton("CHECKOUT");
         checkoutBtn.setBackground(Color.black);
         checkoutBtn.setForeground(Color.ORANGE);
-        checkoutBtn.setBounds(30,250,200,30);
+        checkoutBtn.setBounds(30,230,200,30);
         checkoutBtn.addActionListener(this);
         background.add(checkoutBtn);
 
         checkStatusBtn = new RoundButton("UPDATE CHECK STATUS");
         checkStatusBtn.setBackground(Color.black);
         checkStatusBtn.setForeground(Color.ORANGE);
-        checkStatusBtn.setBounds(30,290,200,30);
+        checkStatusBtn.setBounds(30,270,200,30);
         checkStatusBtn.addActionListener(this);
         background.add(checkStatusBtn);
 
         roomStatusBtn = new RoundButton("UPDATE ROOM STATUS");
         roomStatusBtn.setBackground(Color.black);
         roomStatusBtn.setForeground(Color.ORANGE);
-        roomStatusBtn.setBounds(30,330,200,30);
+        roomStatusBtn.setBounds(30,310,200,30);
         roomStatusBtn.addActionListener(this);
         background.add(roomStatusBtn);
 
         pickUpBtn = new RoundButton("PICK-UP SERVICE");
         pickUpBtn.setBackground(Color.black);
         pickUpBtn.setForeground(Color.ORANGE);
-        pickUpBtn.setBounds(30,370,200,30);
+        pickUpBtn.setBounds(30,350,200,30);
         pickUpBtn.addActionListener(this);
         background.add(pickUpBtn);
 
         searchRoomBtn = new RoundButton("SEARCH ROOM");
         searchRoomBtn.setBackground(Color.black);
         searchRoomBtn.setForeground(Color.ORANGE);
-        searchRoomBtn.setBounds(30,410,200,30);
+        searchRoomBtn.setBounds(30,390,200,30);
         searchRoomBtn.addActionListener(this);
         background.add(searchRoomBtn);
 
         logoutBtn = new RoundButton("LOGOUT");
         logoutBtn.setBackground(Color.black);
         logoutBtn.setForeground(Color.ORANGE);
-        logoutBtn.setBounds(30,450,200,30);
+        logoutBtn.setBounds(30,430,200,30);
         logoutBtn.addActionListener(this);
         background.add(logoutBtn);
 
@@ -131,10 +125,8 @@ public class Reception extends JFrame implements ActionListener {
 
             new Room().setVisible(true);
             this.setVisible(false);
-
-        }else if(e.getSource() == departmentBtn){
-
-        }else if(e.getSource() == employeeBtn){
+        }
+        else if(e.getSource() == employeeBtn){
             new EmployeeInfo().setVisible(true);
               this.setVisible(false);
         }else if(e.getSource() == customerBtn){
@@ -147,13 +139,14 @@ public class Reception extends JFrame implements ActionListener {
             new CheckOut().setVisible(true);
             this.setVisible(false);
         }else if(e.getSource() == checkStatusBtn){
-            new CheckOut().setVisible(true);
+            new CheckStatus().setVisible(true);
             this.setVisible(false);
         }else if(e.getSource() == roomStatusBtn){
             new UpdateRoom().setVisible(true);
             this.setVisible(false);
         }else if(e.getSource() == pickUpBtn){
-
+            new PickUp().setVisible(true);
+            this.setVisible(false);
         }else if(e.getSource() == searchRoomBtn){
 
         }else if(e.getSource() == logoutBtn){
