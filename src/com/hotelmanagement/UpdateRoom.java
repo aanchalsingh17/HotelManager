@@ -13,8 +13,7 @@ import java.util.Map;
 
 public class UpdateRoom extends JFrame implements ActionListener {
 
-    JComboBox idChoice, availChoice, cleanChoice;
-    JTextField roomNumberField;
+    JComboBox availChoice, cleanChoice, roomNumberChoice;
     RoundButton updateBtn,backBtn;
 
     UpdateRoom(){
@@ -37,61 +36,51 @@ public class UpdateRoom extends JFrame implements ActionListener {
         updateLabel.setFont(font.deriveFont(attributes));
         background.add(updateLabel);
 
-        JLabel guestIdLabel = new JLabel(" Guest ID:");
-        ImageIcon id = new ImageIcon("src/com/hotelmanagement/icons/id_icon.png");
-        Image idim = id.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        ImageIcon id_icon = new ImageIcon(idim);
-        guestIdLabel.setIcon(id_icon);
-        guestIdLabel.setBounds(15,58,150,30);
-        guestIdLabel.setFont(new Font("SansSerif", Font.PLAIN ,18));
-        background.add(guestIdLabel);
 
 
+        JLabel roomNoLabel = new JLabel(" Room Number");
+        ImageIcon room = new ImageIcon("src/com/hotelmanagement/icons/roomNo_icon.png");
+        Image roomm = room.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon room_icon = new ImageIcon(roomm);
+        roomNoLabel.setIcon(room_icon);
+        roomNoLabel.setBounds(15,58,170,30);
+        roomNoLabel.setFont(new Font("SansSerif", Font.PLAIN ,18));
+        background.add(roomNoLabel);
 
+        roomNumberChoice = new JComboBox();
+        roomNumberChoice.setBounds(200,60,150,25);
+        roomNumberChoice.setBackground(Color.WHITE);
+        roomNumberChoice.setFont(new Font("SansSerif",Font.BOLD,15));
+        roomNumberChoice.setBorder(BorderFactory.createLineBorder(Color.black,1));
+        roomNumberChoice.setOpaque(true);
+        roomNumberChoice.setEditable(false);
+        background.add(roomNumberChoice);
 
-        idChoice = new JComboBox();
-        idChoice.setBackground(Color.WHITE);
-        idChoice.setBounds(200,60,150,25);
-        idChoice.setBorder(BorderFactory.createLineBorder(Color.black,1));
-
-
-        background.add(idChoice);
         try{
 
             DatabaseConnection conn = new DatabaseConnection();
-            ResultSet r = conn.statement.executeQuery("SELECT * FROM customer");
+            ResultSet r = conn.statement.executeQuery("SELECT * FROM room");
             while (r.next()){
-                idChoice.addItem(r.getString("idnumber"));
+                roomNumberChoice.addItem(r.getString("room_number"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        idChoice.setSelectedItem(null);
+        roomNumberChoice.setSelectedItem(null);
 
-        //  Whenever a id is selected, corresponding room and details are changed
-        idChoice.addItemListener(new ItemListener() {
+
+        //  Whenever a room is selected, corresponding details are changed
+        roomNumberChoice.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                String room = "";
                 try{
-                    String s1 = (String) idChoice.getSelectedItem();
+                    String s1 = (String) roomNumberChoice.getSelectedItem();
                     DatabaseConnection c = new DatabaseConnection();
-                    ResultSet rs1 = c.statement.executeQuery("select * from customer where idnumber = "+s1);
+                    ResultSet rs = c.statement.executeQuery("select * from room where room_number = \""+s1 +"\"");
 
-                    while(rs1.next()){
-                        room = rs1.getString("room_number");
-                        roomNumberField.setText(room);
-                    }
-                }catch(Exception ee){
-                    ee.printStackTrace();
-                }
-
-                try{
-                    DatabaseConnection c  = new DatabaseConnection();
-                    ResultSet rs2 = c.statement.executeQuery("select * from room where room_number = \""+room + "\"");
-                    while(rs2.next()){
-                        availChoice.setSelectedItem(rs2.getString("available"));
-                        cleanChoice.setSelectedItem(rs2.getString("clean"));
+                    while(rs.next()){
+                        availChoice.setSelectedItem(rs.getString("available"));
+                        cleanChoice.setSelectedItem(rs.getString("clean"));
                     }
                 }catch(Exception ee){
                     ee.printStackTrace();
@@ -101,36 +90,18 @@ public class UpdateRoom extends JFrame implements ActionListener {
 
 
 
-        JLabel roomNoLabel = new JLabel(" Room Number");
-        ImageIcon room = new ImageIcon("src/com/hotelmanagement/icons/roomNo_icon.png");
-        Image roomm = room.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        ImageIcon room_icon = new ImageIcon(roomm);
-        roomNoLabel.setIcon(room_icon);
-        roomNoLabel.setBounds(15,118,170,30);
-        roomNoLabel.setFont(new Font("SansSerif", Font.PLAIN ,18));
-        background.add(roomNoLabel);
-
-        roomNumberField = new JTextField("");
-        roomNumberField.setBounds(200,120,150,25);
-        roomNumberField.setBackground(Color.WHITE);
-        roomNumberField.setFont(new Font("SansSerif",Font.BOLD,15));
-        roomNumberField.setBorder(BorderFactory.createLineBorder(Color.black,1));
-        roomNumberField.setOpaque(true);
-        roomNumberField.setEditable(false);
-        background.add(roomNumberField);
-
         JLabel availLabel = new JLabel(" Availability");
         ImageIcon av = new ImageIcon("src/com/hotelmanagement/icons/roomNo_icon.png");
         Image avm = av.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         ImageIcon av_icon = new ImageIcon(avm);
         availLabel.setIcon(av_icon);
         availLabel.setFont(new Font("SansSerif", Font.PLAIN ,18));
-        availLabel.setBounds(15,178,150,30);
+        availLabel.setBounds(15,138,150,30);
         background.add(availLabel);
 
 
         availChoice = new JComboBox(new String[]{"Occupied","Available"});
-        availChoice.setBounds(200,180,150,25);
+        availChoice.setBounds(200,140,150,25);
         availChoice.setBackground(Color.WHITE);
         availChoice.setSelectedItem(null);
         availChoice.setBorder(BorderFactory.createLineBorder(Color.black,1));
@@ -142,11 +113,11 @@ public class UpdateRoom extends JFrame implements ActionListener {
         ImageIcon cl_icon = new ImageIcon(clm);
         cleanLabel.setIcon(cl_icon);
         cleanLabel.setFont(new Font("SansSerif", Font.PLAIN ,18));
-        cleanLabel.setBounds(15,238,150,30);
+        cleanLabel.setBounds(15,218,150,30);
         background.add(cleanLabel);
 
         cleanChoice = new JComboBox(new String[]{"Clean","Dirty"});
-        cleanChoice.setBounds(200,240,150,25);
+        cleanChoice.setBounds(200,220,150,25);
         cleanChoice.setBackground(Color.WHITE);
         cleanChoice.setSelectedItem(null);
         cleanChoice.setBorder(BorderFactory.createLineBorder(Color.black,1));
@@ -157,7 +128,7 @@ public class UpdateRoom extends JFrame implements ActionListener {
         updateBtn = new RoundButton("UPDATE");
         updateBtn.setBackground(Color.black);
         updateBtn.setForeground(Color.ORANGE);
-        updateBtn.setBounds(40,320,100,30);
+        updateBtn.setBounds(40,300,100,30);
         updateBtn.addActionListener(this);
         background.add(updateBtn);
 
@@ -165,7 +136,7 @@ public class UpdateRoom extends JFrame implements ActionListener {
         backBtn = new RoundButton("BACK");
         backBtn.setBackground(Color.black);
         backBtn.setForeground(Color.ORANGE);
-        backBtn.setBounds(215,320,100,30);
+        backBtn.setBounds(215,300,100,30);
         backBtn.addActionListener(this);
         background.add(backBtn);
 
@@ -192,14 +163,14 @@ public class UpdateRoom extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == updateBtn) {
-            if (!roomNumberField.getText().equals("")) {
+            if (!roomNumberChoice.getSelectedItem().equals("")) {
                 try {
                     DatabaseConnection c = new DatabaseConnection();
-                    String str = "update room set clean = \"" + cleanChoice.getSelectedItem() + "\" where room_number = \"" + roomNumberField.getText() + "\"";
+                    String str = "update room set clean = \"" + cleanChoice.getSelectedItem() + "\" where room_number = \"" + roomNumberChoice.getSelectedItem() + "\"";
                     c.statement.executeUpdate(str);
-                    String str2 = "update room set available = \"" + availChoice.getSelectedItem() + "\" where room_number = \"" + roomNumberField.getText() + "\"";
+                    String str2 = "update room set available = \"" + availChoice.getSelectedItem() + "\" where room_number = \"" + roomNumberChoice.getSelectedItem() + "\"";
                     c.statement.executeUpdate(str2);
-                    JOptionPane.showMessageDialog(null, "Update Sucessful");
+                    JOptionPane.showMessageDialog(null, "Room Updated Successfully");
                     new Reception().setVisible(true);
                     setVisible(false);
                 } catch (Exception ee) {
